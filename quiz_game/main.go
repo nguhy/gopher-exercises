@@ -4,6 +4,7 @@ import (
 	"encoding/csv"
 	"flag"
 	"fmt"
+	"math/rand"
 	"os"
 	"strings"
 	"time"
@@ -30,9 +31,12 @@ func main() {
 	fmt.Println(fmt.Sprintf("%v", lines))
 
 	problems := parseCsvLines(lines)
-	timer := time.NewTimer(time.Second * time.Duration(*timeLimit))
-	var count int
 
+	timer := time.NewTimer(time.Second * time.Duration(*timeLimit))
+
+	var count int
+	
+	shuffleProblems(problems)
 loop:
 	for i, problem := range problems {
 		fmt.Printf("Problem #%d: %s = \n", i+1, problem.q)
@@ -77,5 +81,11 @@ func parseCsvLines(input [][]string) []problem {
 func exit(msg string) {
 	fmt.Println(msg)
 	os.Exit(1)
+}
 
+func shuffleProblems(s []problem) {
+	rand.Seed(time.Now().UnixNano())
+	rand.Shuffle(len(s), func(i, j int) {
+		s[i], s[j] = s[j], s[i]
+	})
 }
