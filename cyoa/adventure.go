@@ -2,11 +2,11 @@ package cyoa
 
 import (
 	"encoding/json"
+	"html/template"
 	"io"
 	"log"
 	"net/http"
 	"strings"
-	"text/template"
 )
 
 func init() {
