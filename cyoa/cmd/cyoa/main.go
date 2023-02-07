@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"flag"
 	"fmt"
 	"nguhy/cyoa"
@@ -19,15 +18,11 @@ func main() {
 		panic(err)
 	}
 
-	dec := json.NewDecoder(file)
-
-	var story cyoa.Story
-
-	err = dec.Decode(&story)
+	story, err := cyoa.JSONStory(file)
 
 	if err != nil {
-		fmt.Println(fmt.Sprintf("Error parsing file %s", fileName))
-		return
+		fmt.Println(fmt.Sprintf("Error parsing file %s", *fileName))
+		os.Exit(1)
 	}
 
 	fmt.Println(fmt.Sprintf("%+v", story))
